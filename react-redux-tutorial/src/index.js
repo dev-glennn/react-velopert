@@ -1,12 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'
+import ReactDOM from 'react-dom'
+//스토어
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import './index.css'
+import App from './App'
+import * as serviceWorker from './serviceWorker'
+//루트 리듀서
+import rootReducer from './modules'
 
-ReactDOM.render(<App />, document.getElementById('root'));
+//스토어 생성
+//composeWithDevTools => 크롬 Redux DevTools 사용
+const store = createStore(rootReducer, composeWithDevTools())
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-serviceWorker.unregister();
+ReactDOM.render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById('root'),
+)
+
+serviceWorker.unregister()
